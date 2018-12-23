@@ -17,6 +17,7 @@ build_script:
 test_script:
   - sh: |
       docker run -d $DOCKER_IMAGE_NAME -p 8080:80
+      sleep 5
       curl "http://localhost:8080"
 
 deploy_script:
