@@ -1,0 +1,1 @@
+# appveyor-aspnetcore-docker-
