@@ -1,0 +1,26 @@
+version: '{build}'
+
+image: ubuntu
+
+environment:
+  DOCKER_USER: shibayan
+  DOCKER_PASS:
+    secure: aQDSLi3nDw3anF8c5a/WPw==
+  DOCKER_IMAGE_NAME: shibayan/appveyor-aspnetcore-docker:$(APPVEYOR_REPO_BRANCH)-$(APPVEYOR_BUILD_NUMBER)
+
+init:
+  - docker version
+  - docker info
+  - docker images
+
+build_script:
+  - docker build -t $DOCKER_IMAGE_NAME .
+
+test_script:
+  - sh: |
+      docker run -d $DOCKER_IMAGE_NAME -p 8080:80
+      curl "http://localhost:8080"
+
+deploy_script:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker push $DOCKER_IMAGE_NAME
