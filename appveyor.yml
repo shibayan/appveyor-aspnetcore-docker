@@ -14,12 +14,6 @@ environment:
 build_script:
   - docker build -t $DOCKER_IMAGE_NAME .
 
-test_script:
-  - sh: |
-      docker run -d $DOCKER_IMAGE_NAME -p 8080:80
-      sleep 5
-      curl "http://localhost:8080"
-
 deploy_script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker push $DOCKER_IMAGE_NAME
